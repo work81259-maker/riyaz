@@ -1228,6 +1228,16 @@
         }
     }
     window.addEventListener('DOMContentLoaded', createWeatherEffect);
+
+    // FIX: Failsafe loader hide just in case Firebase or connection is slow
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if(loader && loader.style.display !== 'none') {
+                loader.style.display = 'none';
+            }
+        }, 3500);
+    });
 </script>
 
 <script type="module">
@@ -1303,36 +1313,39 @@
     }
 
     onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-        if (user) {
-            if(userStatusListener) userStatusListener();
-            
-            userStatusListener = onValue(ref(db, `users/${user.uid}`), (snap) => {
-                if(snap.exists()) {
-                    userData = snap.val();
-                    const navBal = document.getElementById('nav-balance');
-                    if(navBal) navBal.innerText = Number(userData.balance || 0).toFixed(2);
+        try {
+            currentUser = user;
+            if (user) {
+                if(userStatusListener) userStatusListener();
+                
+                userStatusListener = onValue(ref(db, `users/${user.uid}`), (snap) => {
+                    if(snap.exists()) {
+                        userData = snap.val();
+                        const navBal = document.getElementById('nav-balance');
+                        if(navBal) navBal.innerText = Number(userData.balance || 0).toFixed(2);
 
-                    if (userData.status === 'banned') {
-                        isUserBanned = true;
-                    } else {
-                        isUserBanned = false;
+                        if (userData.status === 'banned') {
+                            isUserBanned = true;
+                        } else {
+                            isUserBanned = false;
+                        }
+                        updateUIVisibility();
                     }
-                    updateUIVisibility();
-                }
-            });
+                });
 
-            fetchPanels(); 
-            initPromotions();
-            initReferralListener(); // FIXED: Only starts for referred users
-        } else {
-            isUserBanned = false;
-            updateUIVisibility();
-        }
-        
-        const loader = document.getElementById('loader');
-        if (loader) {
-            loader.style.display = 'none';
+                fetchPanels(); 
+                initPromotions();
+            } else {
+                isUserBanned = false;
+                updateUIVisibility();
+            }
+        } catch(error) {
+            console.error("Auth state error:", error);
+        } finally {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
         }
     });
 
@@ -1584,90 +1597,6 @@
             playWelcomeVoice();
         }
     }, { once: true });
-
-    // ===== FIXED REFERRAL SYSTEM =====
-    // Bug Fix: Only users with referredBy get bonus. No bonus for non-referred users.
-
-    let userPaymentsListener = null;
-
-    function initReferralListener() {
-        if (!currentUser) return;
-
-        // First check if user even has a referrer before setting up listener
-        get(ref(db, `users/${currentUser.uid}/referredBy`)).then((snap) => {
-            if (!snap.exists() || !snap.val()) {
-                // User was NOT referred by anyone - no need to listen for referral bonus
-                console.log("User has no referrer. Skipping referral listener.");
-                return;
-            }
-
-            // User HAS a referrer - now set up listener for THEIR payments only
-            if (userPaymentsListener) userPaymentsListener();
-
-            userPaymentsListener = onValue(ref(db, `payments`), async (snap) => {
-                if (!currentUser || isUserBanned) return;
-
-                // Double-check: user must have referredBy AND bonusReceived must be false/undefined
-                const userSnap = await get(ref(db, `users/${currentUser.uid}`));
-                if (!userSnap.exists()) return;
-
-                const uData = userSnap.val();
-                if (!uData.referredBy) return; // No referrer = no bonus
-                if (uData.bonusReceived === true) return; // Already got bonus
-
-                let hasApproved100 = false;
-                snap.forEach(child => {
-                    const p = child.val();
-                    if (p.uid === currentUser.uid && p.status === 'approved' && Number(p.amount) >= 100) {
-                        hasApproved100 = true;
-                    }
-                });
-
-                if (hasApproved100) {
-                    await verifyAndRewardReferral(currentUser.uid);
-                }
-            });
-        });
-    }
-
-    let isProcessingReferral = false;
-    async function verifyAndRewardReferral(uid) {
-        if(isProcessingReferral) return;
-        isProcessingReferral = true;
-        try {
-            const userRef = ref(db, `users/${uid}`);
-            const userSnap = await get(userRef);
-            
-            if(userSnap.exists() && userSnap.val().referredBy && !userSnap.val().bonusReceived) {
-                const uData = userSnap.val();
-                const referrerUid = uData.referredBy;
-                
-                await set(ref(db, `users/${uid}/bonusReceived`), true);
-                
-                await runTransaction(ref(db, `users/${uid}/balance`), (bal) => Number(bal || 0) + 40);
-                await push(ref(db, `referral_history/${uid}`), {
-                    amount: 40,
-                    desc: '🎉 Referral link se join aur add money ka Bonus!',
-                    timestamp: serverTimestamp()
-                });
-                
-                await runTransaction(ref(db, `users/${referrerUid}/balance`), (bal) => Number(bal || 0) + 40);
-                await runTransaction(ref(db, `users/${referrerUid}/successfulReferrals`), (c) => Number(c || 0) + 1); 
-                await runTransaction(ref(db, `users/${referrerUid}/referralEarnings`), (e) => Number(e || 0) + 40);  
-                
-                await push(ref(db, `referral_history/${referrerUid}`), {
-                    amount: 40,
-                    desc: '✅ Dost ne paise add kiye. Referral Bonus!',
-                    timestamp: serverTimestamp()
-                });
-                
-                showToast("🎉 Badhai Ho! ₹40 Referral Bonus wallet me add ho gaye!", "success");
-            }
-        } catch(e) {
-            console.error("Referral Bonus Error:", e);
-        }
-        isProcessingReferral = false;
-    }
 
     window.copyPageReferralLink = () => {
         const link = document.getElementById('page-referral-link').value;
@@ -2833,7 +2762,6 @@
         btn.innerHTML = 'APPLY';
     };
     
-    // 🔥 NEW EMAIL ID SAVING SYSTEM INCORPORATED HERE 🔥
     document.getElementById('confirm-purchase-btn').onclick = async () => {
         if(!currentUser) return;
         const price = Number(window.currentCheckout.finalPrice); 
@@ -2882,7 +2810,6 @@
 
                 const purchaseStatus = isPendingOrder ? "pending" : "delivered";
 
-                // USER GMAIL SAVING LOGIC ADDED HERE!
                 await push(ref(db, `purchases/${currentUser.uid}`), {
                     panelId: window.currentCheckout.panelId,
                     panelName: window.currentCheckout.panelName,
@@ -2894,7 +2821,7 @@
                     link: window.currentCheckout.link,
                     addedBy: window.currentCheckout.addedBy || 'Master Admin', 
                     date: Date.now(),
-                    userEmail: currentUser.email // ADDED EMAIL TO THE PURCHASE
+                    userEmail: currentUser.email 
                 });
 
                 try {
