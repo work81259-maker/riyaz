@@ -2603,13 +2603,13 @@
                     if(!isOutOfStock) {
                         plansHtml += `
                         <div class="plan-btn ${firstAvailablePlanStr === planDataStr ? 'active' : ''}" onclick="selectPlan('${panelId}', this, '${planDataStr}')">
-                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--success); font-weight:800;">(Auto Delivery)</span>
+                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--success); font-weight:800;"></span>
                             <div>₹${plan.price}</div>
                         </div>`;
                     } else {
                         plansHtml += `
                         <div class="plan-btn ${firstAvailablePlanStr === planDataStr ? 'active' : ''}" onclick="selectPlan('${panelId}', this, '${planDataStr}')">
-                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--warning); font-weight:800;">(Manual - Wait 5m)</span>
+                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--warning); font-weight:800;"></span>
                             <div>₹${plan.price}</div>
                         </div>`;
                     }
