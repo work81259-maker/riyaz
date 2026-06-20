@@ -1586,8 +1586,7 @@
     }, { once: true });
 
     // ===== FIXED REFERRAL SYSTEM =====
-    // Bug Fix: Users without referral link were getting ₹40 bonus
-    // Now only users who actually have a 'referredBy' field get the bonus
+    // Bug Fix: Only users with referredBy get bonus. No bonus for non-referred users.
 
     let userPaymentsListener = null;
 
@@ -1638,64 +1637,38 @@
         try {
             const userRef = ref(db, `users/${uid}`);
             const userSnap = await get(userRef);
-
-            // CRITICAL FIX: Multiple validation checks to prevent bonus for non-referred users
-            if(!userSnap.exists()) {
-                console.log("User not found");
-                return;
+            
+            if(userSnap.exists() && userSnap.val().referredBy && !userSnap.val().bonusReceived) {
+                const uData = userSnap.val();
+                const referrerUid = uData.referredBy;
+                
+                await set(ref(db, `users/${uid}/bonusReceived`), true);
+                
+                await runTransaction(ref(db, `users/${uid}/balance`), (bal) => Number(bal || 0) + 40);
+                await push(ref(db, `referral_history/${uid}`), {
+                    amount: 40,
+                    desc: '🎉 Referral link se join aur add money ka Bonus!',
+                    timestamp: serverTimestamp()
+                });
+                
+                await runTransaction(ref(db, `users/${referrerUid}/balance`), (bal) => Number(bal || 0) + 40);
+                await runTransaction(ref(db, `users/${referrerUid}/successfulReferrals`), (c) => Number(c || 0) + 1); 
+                await runTransaction(ref(db, `users/${referrerUid}/referralEarnings`), (e) => Number(e || 0) + 40);  
+                
+                await push(ref(db, `referral_history/${referrerUid}`), {
+                    amount: 40,
+                    desc: '✅ Dost ne paise add kiye. Referral Bonus!',
+                    timestamp: serverTimestamp()
+                });
+                
+                showToast("🎉 Badhai Ho! ₹40 Referral Bonus wallet me add ho gaye!", "success");
             }
-
-            const uData = userSnap.val();
-
-            // FIX 1: Explicit check - must have referredBy field set
-            if (!uData.referredBy) {
-                console.log("User has no referrer. No bonus applicable.");
-                return;
-            }
-
-            // FIX 2: Must not have already received bonus
-            if (uData.bonusReceived === true) {
-                console.log("Bonus already received.");
-                return;
-            }
-
-            // FIX 3: Verify referrer actually exists in database
-            const referrerSnap = await get(ref(db, `users/${uData.referredBy}`));
-            if (!referrerSnap.exists()) {
-                console.log("Referrer not found.");
-                return;
-            }
-
-            const referrerUid = uData.referredBy;
-
-            // Atomically set bonusReceived FIRST to prevent race conditions
-            await set(ref(db, `users/${uid}/bonusReceived`), true);
-
-            // Give ₹40 to the user who was referred (the one who added money)
-            await runTransaction(ref(db, `users/${uid}/balance`), (bal) => Number(bal || 0) + 40);
-            await push(ref(db, `referral_history/${uid}`), {
-                amount: 40,
-                desc: '🎉 Referral link se join aur add money ka Bonus!',
-                timestamp: serverTimestamp()
-            });
-
-            // Give ₹40 to the referrer (the one who shared the link)
-            await runTransaction(ref(db, `users/${referrerUid}/balance`), (bal) => Number(bal || 0) + 40);
-            await runTransaction(ref(db, `users/${referrerUid}/successfulReferrals`), (c) => Number(c || 0) + 1); 
-            await runTransaction(ref(db, `users/${referrerUid}/referralEarnings`), (e) => Number(e || 0) + 40);  
-
-            await push(ref(db, `referral_history/${referrerUid}`), {
-                amount: 40,
-                desc: '✅ Dost ne paise add kiye. Referral Bonus!',
-                timestamp: serverTimestamp()
-            });
-
-            showToast("🎉 Badhai Ho! ₹40 Referral Bonus wallet me add ho gaye!", "success");
         } catch(e) {
             console.error("Referral Bonus Error:", e);
         }
         isProcessingReferral = false;
     }
+
     window.copyPageReferralLink = () => {
         const link = document.getElementById('page-referral-link').value;
         window.copyToClipboard(link);
