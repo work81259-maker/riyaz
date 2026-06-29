@@ -154,52 +154,94 @@
 
         .btn {
             background: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-cyan);
-            border-radius: 10px; cursor: pointer; transition: all 0.3s; 
+            border-radius: 8px !important; cursor: pointer; transition: all 0.3s; 
             display: inline-flex; justify-content: center; align-items: center; gap: 6px;
             position: relative; z-index: 1;
         }
         .btn-primary { background: var(--neon-cyan); color: #000; font-weight: 800; padding: 12px 20px; height: 48px; width: 100%; font-size: 13px; }
-        
-        .btn-purchase {
-            background: linear-gradient(90deg, #0ba360, #3cba92);
-            border: none; 
-            color: white; 
-            font-weight: 800;
-            box-shadow: 0 0 12px rgba(11, 163, 96, 0.4);
-            width: 100%; 
-            height: 46px;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        .btn-purchase:hover {
-            box-shadow: 0 0 20px rgba(11, 163, 96, 0.7);
-            background: linear-gradient(90deg, #3cba92, #0ba360);
-        }
 
+        .btn-purchase {
+            background: linear-gradient(90deg, #00f0ff, #bc13fe);
+            border: none;
+            color: white;
+            font-weight: 800;
+            width: 100%;
+            height: 48px;
+            border-radius: 8px !important;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+            transition: 0.3s;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        
         .action-row { 
             display: flex; 
-            gap: 10px; 
-            margin-top: 10px; 
+            gap: 15px; 
+            margin-top: 15px; 
+            margin-bottom: 15px;
             width: 100%;
         }
 
         .btn-update, .btn-feedback {
-            background: linear-gradient(90deg, #ff0844, #ffb199);
-            border: none;
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 0 12px rgba(255, 8, 68, 0.4);
-            flex: 1;
-            height: 42px;
+            background: transparent !important;
+            border: 1px solid !important;
+            box-shadow: none !important;
+            height: 45px;
             font-size: 11px;
-            padding: 0 5px;
+            font-weight: 700;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #fff !important;
+            flex: 1;
+            transition: 0.3s;
+            cursor: pointer;
         }
+        .btn-update { border-color: var(--neon-cyan) !important; }
+        .btn-feedback { border-color: #ff2a5f !important; }
+        .btn-update:hover { background: rgba(0, 240, 255, 0.1) !important; }
+        .btn-feedback:hover { background: rgba(255, 42, 95, 0.1) !important; }
 
         .btn-pending {
             background: rgba(255,184,0,0.1);
             border: 1px solid var(--warning);
             color: var(--warning);
             width: 100%; height: 48px; font-weight: 600;
+        }
+
+        /* ===== PAYMENT VIDEO TUTORIAL BUTTON ===== */
+        .btn-video-tutorial {
+            background: linear-gradient(90deg, #ff2a5f, #bc13fe);
+            border: none;
+            color: white;
+            width: 100%;
+            height: 48px;
+            border-radius: 8px !important;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(255, 42, 95, 0.3);
+            text-decoration: none;
+        }
+        .btn-video-tutorial:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 42, 95, 0.5);
+        }
+        .btn-video-tutorial i {
+            font-size: 18px;
+        }
+        .btn-video-tutorial.hidden {
+            display: none !important;
         }
 
         .input-group input {
@@ -237,6 +279,7 @@
             animation: slideUp 0.3s forwards;
             margin-bottom: 10px;
             display: flex; align-items: center; gap: 12px;
+            z-index: 10000;
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -289,11 +332,6 @@
             text-overflow: ellipsis;
             font-size: 24px;
             margin-bottom: 5px;
-        }
-        @media (max-width: 400px) {
-            .auth-card h1 {
-                font-size: 20px;
-            }
         }
 
         .auth-top-img {
@@ -458,9 +496,6 @@
 
         .panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         
-        /* ===== SMOOTH RGB ANIMATIONS (Features, Prices, Card Border) SLOWED DOWN TO 8s ===== */
-        
-        /* 1. Card Main Border - Very Soft Glow */
         @keyframes rgbCardBorderSoft {
             0% { border-color: #ff2a5f; box-shadow: 0 0 6px rgba(255,42,95,0.25); }
             16% { border-color: #bc13fe; box-shadow: 0 0 6px rgba(188,19,254,0.25); }
@@ -469,39 +504,6 @@
             66% { border-color: #ffb800; box-shadow: 0 0 6px rgba(255,184,0,0.25); }
             83% { border-color: #ff0844; box-shadow: 0 0 6px rgba(255,8,68,0.25); }
             100% { border-color: #ff2a5f; box-shadow: 0 0 6px rgba(255,42,95,0.25); }
-        }
-
-        /* 2. Soft Border Only (For chips/buttons) */
-        @keyframes rgbSoftBorder {
-            0% { border-color: #ff2a5f; }
-            16% { border-color: #bc13fe; }
-            33% { border-color: #00f0ff; }
-            50% { border-color: #00ff66; }
-            66% { border-color: #ffb800; }
-            83% { border-color: #ff0844; }
-            100% { border-color: #ff2a5f; }
-        }
-
-        /* 3. Soft Text Color (For features, prices, day text) */
-        @keyframes rgbSoftText {
-            0% { color: #ff2a5f; text-shadow: 0 0 5px rgba(255,42,95,0.4); }
-            16% { color: #bc13fe; text-shadow: 0 0 5px rgba(188,19,254,0.4); }
-            33% { color: #00f0ff; text-shadow: 0 0 5px rgba(0,240,255,0.4); }
-            50% { color: #00ff66; text-shadow: 0 0 5px rgba(0,255,102,0.4); }
-            66% { color: #ffb800; text-shadow: 0 0 5px rgba(255,184,0,0.4); }
-            83% { color: #ff0844; text-shadow: 0 0 5px rgba(255,8,68,0.4); }
-            100% { color: #ff2a5f; text-shadow: 0 0 5px rgba(255,42,95,0.4); }
-        }
-
-        /* 4. Active Plan Background */
-        @keyframes rgbActiveBg {
-            0% { background: rgba(255,42,95,0.2); }
-            16% { background: rgba(188,19,254,0.2); }
-            33% { background: rgba(0,240,255,0.2); }
-            50% { background: rgba(0,255,102,0.2); }
-            66% { background: rgba(255,184,0,0.2); }
-            83% { background: rgba(255,8,68,0.2); }
-            100% { background: rgba(255,42,95,0.2); }
         }
 
         .panel-card {
@@ -513,7 +515,6 @@
             overflow: hidden;
             transition: transform 0.4s;
             position: relative; z-index: 1;
-            /* Applying smooth low-light border to card (SLOWED to 8s) */
             animation: rgbCardBorderSoft 8s linear infinite; 
         }
         .panel-card:hover { transform: translateY(-8px); }
@@ -535,54 +536,199 @@
             text-overflow: ellipsis; 
             width: 100%;
             display: block;
+            text-align: center;
         }
 
-        .features-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; align-items: center; }
+        /* ===== RGB FEATURES LIST UI ===== */
+        @keyframes rgbGlowText {
+            0% { color: #ff2a5f; text-shadow: 0 0 10px rgba(255,42,95,0.6); }
+            16% { color: #bc13fe; text-shadow: 0 0 10px rgba(188,19,254,0.6); }
+            33% { color: #00f0ff; text-shadow: 0 0 10px rgba(0,240,255,0.6); }
+            50% { color: #00ff66; text-shadow: 0 0 10px rgba(0,255,102,0.6); }
+            66% { color: #ffb800; text-shadow: 0 0 10px rgba(255,184,0,0.6); }
+            83% { color: #ff0844; text-shadow: 0 0 10px rgba(255,8,68,0.6); }
+            100% { color: #ff2a5f; text-shadow: 0 0 10px rgba(255,42,95,0.6); }
+        }
+
+        @keyframes rgbBorderOnly {
+            0% { border-left-color: #ff2a5f; }
+            16% { border-left-color: #bc13fe; }
+            33% { border-left-color: #00f0ff; }
+            50% { border-left-color: #00ff66; }
+            66% { border-left-color: #ffb800; }
+            83% { border-left-color: #ff0844; }
+            100% { border-left-color: #ff2a5f; }
+        }
+
+        .features-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; align-items: center; width: 100%; }
         
-        .feature-chip { 
-            background: transparent !important;
-            border: 1px solid transparent; /* controlled by animation */
-            padding: 6px 12px; 
-            border-radius: 8px; 
-            font-size: 11px; 
-            font-weight: 600; 
-            backdrop-filter: none !important; 
-            -webkit-backdrop-filter: none !important; 
-            /* Applying RGB text and border to features/functions (SLOWED to 8s) */
-            animation: rgbSoftBorder 8s linear infinite, rgbSoftText 8s linear infinite;
+        .feature-item {
+            background: rgba(15, 20, 30, 0.8);
+            border-left: 3px solid var(--neon-cyan);
+            border-radius: 8px;
+            padding: 10px 15px; 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: rgbBorderOnly 6s linear infinite; 
+        }
+        .feature-item i { 
+            font-size: 16px; 
+            animation: rgbGlowText 6s linear infinite; 
         }
         
-        .plan-options {
-            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;
+        /* ===== BRIGHT BOUNCING ARROW BUTTON ===== */
+        @keyframes bounceArrowAnim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
         }
-        
-        .plan-btn {
-            flex: 1; min-width: 30%;
-            padding: 10px 5px;
-            background: transparent !important; 
-            backdrop-filter: none !important; 
-            -webkit-backdrop-filter: none !important;
-            border: 1px solid transparent; /* controlled by animation */
-            border-radius: 12px;
-            font-size: 11px; font-weight: 600;
-            text-align: center; cursor: pointer;
-            transition: transform 0.3s;
-            /* Applying RGB text and border to Day plans (SLOWED to 8s) */
-            animation: rgbSoftBorder 8s linear infinite, rgbSoftText 8s linear infinite;
+
+        .expand-arrow-btn {
+            background: transparent;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            padding: 0;
+            margin-top: -2px;
+            animation: rgbGlowText 6s linear infinite; 
         }
-        .plan-btn div { 
-            margin-top: 4px; font-size: 14px; font-weight: 800; 
-            /* Applying RGB text to Prices inside plan button (SLOWED to 8s) */
-            animation: rgbSoftText 8s linear infinite;
+        .expand-arrow-btn i { 
+            display: inline-block;
+            animation: bounceArrowAnim 1.5s ease-in-out infinite;
         }
-        
-        /* Active Plan Button */
-        .plan-btn.active {
-            animation: rgbSoftBorder 8s linear infinite, rgbActiveBg 8s linear infinite;
+
+        /* ===== PINK GRADIENT PLAN SELECT BUTTON ===== */
+        .btn-select-plan {
+            background: linear-gradient(90deg, #ff2a5f, #bc13fe);
+            border: none;
+            color: white;
+            width: 100%;
+            height: 48px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 42, 95, 0.4);
+        }
+        .btn-select-plan:hover {
+            box-shadow: 0 6px 20px rgba(255, 42, 95, 0.6);
             transform: translateY(-2px);
         }
-        .plan-btn.active div { 
-            animation: rgbSoftText 8s linear infinite;
+
+        .btn-main-buy {
+            background: linear-gradient(90deg, #5100ff, #bc13fe);
+            border: none;
+            color: white;
+            font-weight: 800;
+            width: 100%;
+            height: 48px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+        .btn-main-buy:hover { box-shadow: 0 6px 20px rgba(188, 19, 254, 0.6); transform: translateY(-2px); }
+
+        /* ===== REFINED PLAN LIST UI (COMPACT, SIDE-BY-SIDE & ANIMATED) ===== */
+        .plan-list-container {
+            display: none; 
+            flex-direction: column;
+            gap: 8px; 
+            margin-bottom: 15px;
+            background: transparent; 
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .plan-list-container::-webkit-scrollbar { width: 4px; }
+        .plan-list-container::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
+
+        .plan-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(20, 24, 34, 0.7); 
+            padding: 10px 15px; 
+            border-radius: 12px;
+            border: 2px solid transparent; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .plan-list-item.active {
+            border-color: var(--neon-cyan);
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.15), rgba(0, 240, 255, 0.05));
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .plan-info-text {
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            gap: 8px; 
+            text-align: left;
+        }
+
+        /* BOTH PRICE AND DURATION NOW HAVE RGB ANIMATION */
+        .plan-info-text .price { 
+            font-size: 16px; 
+            font-weight: 900; 
+            white-space: nowrap; 
+            animation: rgbGlowText 6s linear infinite; 
+        }
+
+        .plan-info-text .duration { 
+            font-size: 13px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            margin-bottom: 0px; 
+            letter-spacing: 0.5px;
+            animation: rgbGlowText 6s linear infinite; 
+        }
+        
+        .radio-indicator {
+            width: 22px; 
+            height: 22px; 
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.5);
+        }
+        .plan-list-item.active .radio-indicator {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .plan-list-item.active .radio-indicator::after {
+            content: ''; 
+            position: absolute;
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
         }
 
         .payment-settings-card { padding: 40px 30px; text-align: center; max-width: 600px; margin: 0 auto; position: relative; }
@@ -645,8 +791,8 @@
         .coupon-box { display: flex; gap: 10px; margin-bottom: 20px; }
         .coupon-box input { flex: 1; padding: 0 15px; height: 48px; background: rgba(0,0,0,0.3); border: 1px dashed rgba(188,19,254,0.5); border-radius: 8px; color: white; text-transform: uppercase; }
         .coupon-box button { width: auto; padding: 0 20px; height: 48px; }
-        .checkout-actions { display: flex; gap: 10px; }
-        .checkout-actions .btn { width: 100%; height: 48px; }
+        .checkout-actions { display: flex; flex-direction: column; gap: 10px; } 
+        .checkout-actions .btn { width: 100%; height: 48px; border-radius: 8px; }
         .strike-price { text-decoration: line-through; color: var(--text-muted); font-size: 14px; margin-right: 10px; }
         .empty-state { text-align: center; padding: 60px 20px; }
 
@@ -873,11 +1019,10 @@
             #app-ticker { top: 70px; }
             .logo { font-size: 16px; }
             .page-title { font-size: 18px; }
-            .page-content { padding-top: 80px; } /* MOVED UP */
+            .page-content { padding-top: 80px; } 
             .search-container { max-width: 100%; }
             .promo-card { flex: 0 0 90%; height: 150px; }
             .coupon-box { flex-direction: column; }
-            .checkout-actions { flex-direction: column; }
             .chat-window { width: 90%; left: 5%; bottom: 90px; }
             #fomo-container { bottom: 90px; right: 15px; } 
         }
@@ -946,7 +1091,7 @@
             <h2 style="color: white; margin-bottom: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;">APP UNDER MAINTENANCE</h2>
             <p id="maintenance-msg" style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 20px;">We are upgrading our servers to give you a better experience. Please check back shortly.</p>
             
-            <a href="#" id="maint-join-btn" target="_blank" class="btn-join-green"><i class="fab fa-telegram-plane" style="font-size: 18px; margin-right: 8px;"></i> JOIN NOW</a>
+            <a href="#" id="maint-join-btn" target="_blank" class="btn-join-green"><i class="fab fa-telegram-plane" style="font-size: 18px; margin-right: 8px;"></i> CUSTOMER SUPPORT</a>
         </div>
     </div>
 </div>
@@ -1098,28 +1243,21 @@
                         <span class="qr-loader-text">Generating QR Code...</span>
                     </div>
                 </div>
-                <div class="upi-box" onclick="copyUPI()">
+                <div class="upi-box" onclick="copyUPI()" style="margin-bottom: 5px;">
                     <span id="display-upi">7477743863@ybl</span> <i class="fas fa-copy"></i>
                 </div>
-                
-                <!-- EDITED: Single Line Text Adjustment -->
-                <p style="font-weight: 700; color: var(--neon-cyan); margin-bottom: 10px; white-space: nowrap; font-size: 14px;">Step 1: Enter Amount & Generate QR</p>
-                
-                <div class="input-group" style="margin-bottom: 15px;">
+                <p style="font-weight: 700; color: var(--neon-cyan); margin-bottom: 5px; margin-top: 0px; white-space: nowrap; font-size: 13px;">Step 1: Enter Amount & Generate QR</p>
+                <div class="input-group" style="margin-bottom: 8px;">
                     <input id="add-amount" placeholder="Enter Amount (₹)" type="number" style="font-size: 16px; font-weight: bold; text-align: center;" oninput="onAmountInputChanged()">
                 </div>
-                
-                <!-- EDITED: Buttons Adjusted and Setup Video Button Added -->
-                <button id="btn-generate-qr" class="btn btn-primary" onclick="generateDynamicQR()" style="height: 42px; width: 100%; border-radius: 12px; margin-bottom: 12px; font-weight: 800; font-size: 13px;">
+                <button id="btn-generate-qr" class="btn btn-primary" onclick="generateDynamicQR()" style="height: 45px; width: 100%; border-radius: 12px; margin-bottom: 10px; font-weight: 800;">
                     <i class="fas fa-sync"></i> GENERATE DYNAMIC QR
                 </button>
-                <button class="btn btn-purchase" onclick="proceedToStep2()" style="height: 42px; font-size: 14px; background: linear-gradient(90deg, #ffb800, #ff8c00); margin-bottom: 12px;"><i class="fas fa-arrow-circle-right"></i> SEND PAYMENT - REQUEST  </button>
-                
-                <a id="payment-video-btn" href="#" target="_blank" class="btn" style="height: 42px; width: 100%; border-radius: 12px; font-weight: 700; border: 1px solid var(--neon-purple); color: var(--neon-purple); text-decoration: none; align-items: center; justify-content: center; display: none; background: rgba(188,19,254,0.1);">
-                    <i class="fas fa-play-circle" style="font-size: 16px;"></i> Add Payment Video 
+                <button class="btn btn-purchase" onclick="proceedToStep2()" style="background: linear-gradient(90deg, #ffb800, #ff8c00);"><i class="fas fa-arrow-circle-right"></i> I HAVE PAID - PROCEED</button>
+                <a id="payment-video-btn" class="btn-video-tutorial hidden" href="#" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-play-circle"></i> WATCH PAYMENT TUTORIAL
                 </a>
             </div>
-            
             <div id="payment-step-2" class="hidden" style="position: relative;">
                 <i class="fas fa-arrow-left" style="position: absolute; left: 10px; top: -10px; font-size: 20px; cursor: pointer; color: var(--text-muted);" onclick="goBackToStep1()"></i>
                 <i class="fas fa-receipt" style="font-size: 50px; color: var(--neon-cyan); margin-bottom: 15px;"></i>
@@ -1211,7 +1349,24 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-checkout"><div class="modal checkout-modal"><div class="checkout-details"><div class="checkout-row"><span>Item:</span><strong id="chk-panel-name">-</strong></div><div class="checkout-row"><span>Plan:</span><strong id="chk-plan-label">-</strong></div><div class="checkout-row"><span>Price:</span><strong>₹<span id="chk-orig-price">0</span></strong></div><div class="checkout-total"><span>Total:</span><div><span id="chk-strike-price" class="strike-price hidden"></span> ₹<span id="chk-final-price">0</span></div></div></div><div class="coupon-box"><input id="chk-coupon-input" placeholder="Promo Code" autocomplete="off"><button class="btn btn-primary" id="apply-coupon-btn" onclick="applyCoupon()">APPLY</button></div><div class="checkout-actions"><button class="btn btn-primary" onclick="closeModal('modal-checkout')" style="background:transparent; border:1px solid var(--neon-cyan);">CANCEL</button><button class="btn btn-purchase" id="confirm-purchase-btn" style="margin-top:0;">PAY NOW</button></div></div></div>
+<div class="modal-overlay" id="modal-checkout">
+    <div class="modal checkout-modal">
+        <div class="checkout-details">
+            <div class="checkout-row"><span>Item:</span><strong id="chk-panel-name">-</strong></div>
+            <div class="checkout-row"><span>Plan:</span><strong id="chk-plan-label">-</strong></div>
+            <div class="checkout-row"><span>Price:</span><strong>₹<span id="chk-orig-price">0</span></strong></div>
+            <div class="checkout-total"><span>Total:</span><div><span id="chk-strike-price" class="strike-price hidden"></span> ₹<span id="chk-final-price">0</span></div></div>
+        </div>
+        <div class="coupon-box">
+            <input id="chk-coupon-input" placeholder="Promo Code" autocomplete="off">
+            <button class="btn btn-primary" id="apply-coupon-btn" onclick="applyCoupon()">APPLY</button>
+        </div>
+        <div class="checkout-actions">
+            <button class="btn" onclick="closeModal('modal-checkout')" style="background:rgba(255,42,95,0.1); border:1px solid var(--error); color:var(--error); width:100%; height:48px;">CANCEL</button>
+            <button class="btn btn-purchase" id="confirm-purchase-btn" style="margin-top:0;">PAY NOW</button>
+        </div>
+    </div>
+</div>
 
 <div class="modal-overlay" id="modal-success">
     <div class="modal" style="text-align:center;">
@@ -1254,7 +1409,7 @@
         <div class="rgb-modal-inner">
             <img id="welcome-img" class="rgb-rect-img" src="" alt="Special Offer">
             <p id="welcome-text" style="color: white; font-size: 14px; margin-bottom: 15px; line-height: 1.5; font-weight: 500;"></p>
-            <a href="#" id="welcome-btn" target="_blank" class="btn-join-green"><i class="fab fa-telegram-plane" style="font-size: 18px; margin-right: 8px;"></i> JOIN NOW</a>
+            <a href="#" id="welcome-btn" target="_blank" class="btn-join-green"><i class="fab fa-telegram-plane" style="font-size: 18px; margin-right: 8px;"></i> CUSTOMER SUPPORT</a>
         </div>
     </div>
 </div>
@@ -1280,7 +1435,6 @@
     }
     window.addEventListener('DOMContentLoaded', createWeatherEffect);
 
-    // FIX: Failsafe loader hide just in case Firebase or connection is slow
     window.addEventListener('load', () => {
         setTimeout(() => {
             const loader = document.getElementById('loader');
@@ -1339,7 +1493,6 @@
         return str.toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    // Robust EmailJS v3 Send Function
     async function sendEmailNotification(toEmail, subject, message) {
         try {
             if (!window.emailjs) {
@@ -1860,7 +2013,7 @@
         const ytRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/)|youtu\.be\/)([^"&?\/\s]{11})/i;
         const ytMatch = videoUrl.match(ytRegex);
         if (ytMatch && ytMatch[1]) {
-            return `<iframe src="https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+            return `<iframe src="https://www.youtube.com/embed/${ytMatch[1]}?autoplay=0&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
         }
         
         const vimeoRegex = /vimeo\.com\/(?:.*#|.*\/videos\/)?([0-9]+)/i;
@@ -2123,23 +2276,24 @@
                     if (placeholderIcon) placeholderIcon.classList.add('hidden');
                 }
             }
-            
-            // ===== NEW VIDEO LINK LOGIC SET =====
-            const videoBtn = document.getElementById('payment-video-btn');
-            const videoLink = snap.val().paymentVideo;
-            if(videoLink && videoLink.trim() !== '') {
-                videoBtn.href = videoLink;
-                videoBtn.style.display = 'flex';
+            // ===== PAYMENT VIDEO TUTORIAL BUTTON LOGIC =====
+            if(snap.val().paymentVideo && snap.val().paymentVideo.trim() !== '') {
+                const videoBtn = document.getElementById('payment-video-btn');
+                if(videoBtn) {
+                    videoBtn.href = snap.val().paymentVideo;
+                    videoBtn.classList.remove('hidden');
+                }
             } else {
-                videoBtn.style.display = 'none';
+                const videoBtn = document.getElementById('payment-video-btn');
+                if(videoBtn) videoBtn.classList.add('hidden');
             }
-
         } else {
             const upiDisplay = document.getElementById('display-upi');
             if (upiDisplay && upiDisplay.innerText === 'Loading...') {
                 upiDisplay.innerText = '7477743863@ybl';
             }
-            document.getElementById('payment-video-btn').style.display = 'none';
+            const videoBtn = document.getElementById('payment-video-btn');
+            if(videoBtn) videoBtn.classList.add('hidden');
         }
     });
 
@@ -2513,26 +2667,27 @@
         });
     }
 
-    window.selectPlan = (panelId, btn, planDataStr) => {
-        const container = btn.parentElement;
-        container.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(`plan-val-${panelId}`).value = decodeURIComponent(planDataStr);
-    };
-
-    window.toggleFeatures = (panelId, moreCount) => {
+    window.toggleFeatures = (panelId) => {
         const hiddenDiv = document.getElementById(`more-feat-${panelId}`);
-        const btn = document.getElementById(`btn-feat-${panelId}`);
+        const icon = document.querySelector(`#btn-feat-${panelId} i`);
+        
         if (hiddenDiv.style.display === 'none') {
             hiddenDiv.style.display = 'flex';
-            btn.innerHTML = '- Show Less';
-            btn.style.color = '#ff2a5f';
-            btn.style.borderColor = '#ff2a5f';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
         } else {
             hiddenDiv.style.display = 'none';
-            btn.innerHTML = `+${moreCount} More`;
-            btn.style.color = 'var(--neon-purple)';
-            btn.style.borderColor = 'rgba(188,19,254,0.4)';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    };
+
+    window.togglePlanList = (panelId) => {
+        const listContainer = document.getElementById(`plan-list-${panelId}`);
+        if (listContainer.style.display === 'none' || listContainer.style.display === '') {
+            listContainer.style.display = 'flex';
+        } else {
+            listContainer.style.display = 'none';
         }
     };
 
@@ -2563,6 +2718,22 @@
         });
     }
 
+    window.selectListPlan = (panelId, element, planDataStr) => {
+        const container = document.getElementById(`plan-list-${panelId}`);
+        container.querySelectorAll('.plan-list-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+        
+        document.getElementById(`plan-val-${panelId}`).value = decodeURIComponent(planDataStr);
+
+        const planObj = JSON.parse(decodeURIComponent(planDataStr));
+        const btn = document.getElementById(`btn-select-plan-${panelId}`);
+        if(btn) {
+            btn.innerHTML = `₹${Number(planObj.price).toFixed(2)} - ${planObj.label || 'Selected'} <i class="fas fa-chevron-down"></i>`;
+        }
+        
+        container.style.display = 'none';
+    };
+
     function renderPanelsUI(panelsObj) {
         const panelsContainer = document.getElementById('panels-container');
         if(!panelsContainer) return;
@@ -2582,29 +2753,33 @@
             const panelId = p.id;
             
             const allFeatures = (p.description || 'Premium Tool').split(/\n|-/).filter(f => f.trim());
-            let visibleFeaturesHtml = allFeatures.slice(0, 3).map(f => `<span class="feature-chip"><i class="fas fa-bolt"></i> ${f.trim()}</span>`).join('');
+            let visibleFeaturesHtml = allFeatures.slice(0, 3).map(f => `<div class="feature-item"><i class="fas fa-bolt"></i> ${f.trim()}</div>`).join('');
             let hiddenFeaturesHtml = '';
             let moreBtnHtml = '';
             
             if (allFeatures.length > 3) {
-                const moreCount = allFeatures.length - 3;
-                hiddenFeaturesHtml = `<div id="more-feat-${panelId}" style="display: none; flex-wrap: wrap; gap: 8px; margin-top: 8px; width: 100%;">` + 
-                    allFeatures.slice(3).map(f => `<span class="feature-chip"><i class="fas fa-bolt"></i> ${f.trim()}</span>`).join('') + 
+                hiddenFeaturesHtml = `<div id="more-feat-${panelId}" style="display: none; flex-direction: column; gap: 5px; width: 100%;">` + 
+                    allFeatures.slice(3).map(f => `<div class="feature-item"><i class="fas fa-bolt"></i> ${f.trim()}</div>`).join('') + 
                     `</div>`;
                     
-                moreBtnHtml = `<span class="feature-chip" id="btn-feat-${panelId}" onclick="toggleFeatures('${panelId}', ${moreCount})" style="background: rgba(188,19,254,0.15); color: var(--neon-purple); border-color: rgba(188,19,254,0.4); cursor: pointer; transition: 0.3s; font-weight: 800;">+${moreCount} More</span>`;
+                moreBtnHtml = `<button class="expand-arrow-btn" id="btn-feat-${panelId}" onclick="toggleFeatures('${panelId}')"><i class="fas fa-chevron-down"></i></button>`;
             }
             
-            let featuresHtml = visibleFeaturesHtml + moreBtnHtml + hiddenFeaturesHtml;
+            let featuresHtml = `<div class="features-list">${visibleFeaturesHtml} ${hiddenFeaturesHtml} ${moreBtnHtml}</div>`;
             
             let plansHtml = '';
-            let hasAnyAvailable = false;
+            const addedBy = p.addedBy || 'Master Admin'; 
             let firstAvailablePlanStr = '';
+            let hasAnyAvailable = false;
+            let initialPlanLabel = 'Select Plan';
+            let initialPlanPrice = '0.00';
 
             if(p.plans && Object.keys(p.plans).length > 0) {
-                plansHtml = `<div class="plan-options" id="plans-${panelId}">`;
-                
-                Object.entries(p.plans).forEach(([key, plan]) => {
+                const sortedPlansData = Object.entries(p.plans).sort((a, b) => {
+                    return parseFloat(a[1].price || 0) - parseFloat(b[1].price || 0);
+                });
+
+                sortedPlansData.forEach(([key, plan]) => {
                     
                     let specificStock = null;
                     let actualStockPath = null; 
@@ -2613,20 +2788,8 @@
                         const stockObj = globalStockData[panelId];
                         const normPlanLabel = normalizeStr(plan.label);
                         
-                        // UPDATED MAPPING TO INCLUDE 2 TO 12 HOURS
                         const durationMap = {
                             '1_hour': ['1hour', '1h', '60m'],
-                            '2_hours': ['2hour', '2h'],
-                            '3_hours': ['3hour', '3h'],
-                            '4_hours': ['4hour', '4h'],
-                            '5_hours': ['5hour', '5h'],
-                            '6_hours': ['6hour', '6h'],
-                            '7_hours': ['7hour', '7h'],
-                            '8_hours': ['8hour', '8h'],
-                            '9_hours': ['9hour', '9h'],
-                            '10_hours': ['10hour', '10h'],
-                            '11_hours': ['11hour', '11h'],
-                            '12_hours': ['12hour', '12h'],
                             '1_day': ['1day', '24h', 'daily', '1d'],
                             '3_days': ['3day', '3d', '72h'],
                             '5_days': ['5day', '5d'], 
@@ -2659,6 +2822,7 @@
 
                     const keyCount = specificStock ? Object.keys(specificStock).length : 0;
                     const isOutOfStock = keyCount === 0;
+                    const priceFormatted = Number(plan.price).toFixed(2);
 
                     const planDataStr = encodeURIComponent(JSON.stringify({
                         key: key, 
@@ -2669,25 +2833,24 @@
 
                     if(!hasAnyAvailable) {
                         firstAvailablePlanStr = planDataStr;
+                        initialPlanLabel = plan.label || key;
+                        initialPlanPrice = priceFormatted;
                         hasAnyAvailable = true;
                     }
 
-                    if(!isOutOfStock) {
-                        plansHtml += `
-                        <div class="plan-btn ${firstAvailablePlanStr === planDataStr ? 'active' : ''}" onclick="selectPlan('${panelId}', this, '${planDataStr}')">
-                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--success); font-weight:800;"></span>
-                            <div>₹${plan.price}</div>
-                        </div>`;
-                    } else {
-                        plansHtml += `
-                        <div class="plan-btn ${firstAvailablePlanStr === planDataStr ? 'active' : ''}" onclick="selectPlan('${panelId}', this, '${planDataStr}')">
-                            ${plan.label || key} <span style="font-size:9px; display:block; color:var(--warning); font-weight:800;"></span>
-                            <div>₹${plan.price}</div>
-                        </div>`;
-                    }
+                    const isActive = firstAvailablePlanStr === planDataStr ? 'active' : '';
+
+                    plansHtml += `
+                    <div class="plan-list-item ${isActive}" onclick="selectListPlan('${panelId}', this, '${planDataStr}')">
+                        <div class="plan-info-text">
+                            <div class="price">₹${priceFormatted}</div>
+                            <div class="duration">- ${plan.label || key} ${isOutOfStock ? '<span style="color:var(--warning); font-size:10px;"></span>' : ''}</div>
+                        </div>
+                        <div style="display:flex; align-items:center;">
+                            <div class="radio-indicator"></div>
+                        </div>
+                    </div>`;
                 });
-                
-                plansHtml += `</div><input type="hidden" id="plan-val-${panelId}" value="${firstAvailablePlanStr}">`;
             }
             
             let videoHtml = '';
@@ -2698,24 +2861,32 @@
             
             const card = document.createElement('div');
             card.className = 'panel-card glass'; 
-            
             card.setAttribute('data-search', `${p.name} ${p.description || ''}`);
             card.setAttribute('data-category', p.category || 'Root Panel'); 
-            
-            const addedBy = p.addedBy || 'Master Admin'; 
-            
-            let buyBtnHtml = `<button class="btn btn-purchase" onclick="handlePurchase('${panelId}', '${p.name.replace(/'/g, "\\'")}', '${p.link || ''}', '${addedBy}')"><i class="fas fa-shopping-cart"></i> BUY NOW</button>`;
 
             card.innerHTML = `${videoHtml}
             <div class="panel-info">
                 <div class="panel-title" title="${p.name}">${p.name}</div>
-                <div class="features-list">${featuresHtml || '<span class="feature-chip">Premium Quality</span>'}</div>
-                ${plansHtml}
-                ${buyBtnHtml}
+                
+                ${featuresHtml}
+                
                 <div class="action-row">
-                    <button class="btn btn-update" onclick="window.open('${p.updateLink || '#'}', '_blank')"><i class="fas fa-sync-alt"></i> CHECK UPDATE</button>
-                    <button class="btn btn-feedback" onclick="window.open('${p.feedbackLink || '#'}', '_blank')"><i class="fas fa-comment-dots"></i> PANEL FEEDBACK</button>
+                    <button class="btn btn-update" onclick="window.open('${p.updateLink || '#'}', '_blank')"><i class="fas fa-download"></i> INSTALL/PANEL</button>
+                    <button class="btn btn-feedback" onclick="window.open('${p.feedbackLink || '#'}', '_blank')"><i class="fas fa-play"></i> VIDEO/FEEDBACK</button>
                 </div>
+                
+                <button class="btn-select-plan" id="btn-select-plan-${panelId}" onclick="togglePlanList('${panelId}')">
+                    ₹${initialPlanPrice} - ${initialPlanLabel} <i class="fas fa-chevron-down"></i>
+                </button>
+                
+                <div class="plan-list-container" id="plan-list-${panelId}">
+                    ${plansHtml}
+                </div>
+                
+                <input type="hidden" id="plan-val-${panelId}" value="${firstAvailablePlanStr}">
+                
+                <button class="btn-main-buy" onclick="handlePurchaseFromList('${panelId}', '${p.name.replace(/'/g, "\\'")}', '${p.link || ''}', '${addedBy}')">BUY KEY</button>
+                
             </div>`;
             
             panelsContainer.appendChild(card);
@@ -2751,11 +2922,12 @@
     }
 
     window.currentCheckout = {};
-    window.handlePurchase = (panelId, panelName, link, addedBy) => {
-        const select = document.getElementById(`plan-val-${panelId}`);
-        if(!select || !select.value) return showToast('Please select a valid plan first.', 'error');
+    
+    window.handlePurchaseFromList = (panelId, panelName, link, addedBy) => {
+        const valStr = document.getElementById(`plan-val-${panelId}`).value;
+        if(!valStr) return showToast('Please select a plan first.', 'error');
         
-        const plan = JSON.parse(select.value);
+        const plan = JSON.parse(decodeURIComponent(valStr));
         const price = Number(plan.price);
 
         if(Number(userData.balance) < price) {
@@ -2777,8 +2949,8 @@
         
         document.getElementById('chk-panel-name').innerText = panelName;
         document.getElementById('chk-plan-label').innerText = plan.label;
-        document.getElementById('chk-orig-price').innerText = price;
-        document.getElementById('chk-final-price').innerText = price;
+        document.getElementById('chk-orig-price').innerText = price.toFixed(2);
+        document.getElementById('chk-final-price').innerText = price.toFixed(2);
         document.getElementById('chk-coupon-input').value = ''; 
         document.getElementById('chk-strike-price').classList.add('hidden');
         document.getElementById('modal-checkout').classList.add('active');
@@ -2821,7 +2993,7 @@
             window.currentCheckout.appliedCouponCode = code;
 
             document.getElementById('chk-final-price').innerText = finalPrice.toFixed(2);
-            document.getElementById('chk-strike-price').innerText = '₹' + window.currentCheckout.price;
+            document.getElementById('chk-strike-price').innerText = '₹' + window.currentCheckout.price.toFixed(2);
             document.getElementById('chk-strike-price').classList.remove('hidden');
 
             showToast(`₹${couponData.discount} discount applied!`, "success");
