@@ -178,9 +178,9 @@
         
         .action-row { 
             display: flex; 
-            gap: 15px; 
-            margin-top: 15px; 
-            margin-bottom: 15px;
+            gap: 6px; 
+            margin-top: 6px; 
+            margin-bottom: 6px;
             width: 100%;
         }
 
@@ -188,14 +188,14 @@
             background: transparent !important;
             border: 1px solid !important;
             box-shadow: none !important;
-            height: 45px;
-            font-size: 11px;
+            height: 30px;
+            font-size: 8px;
             font-weight: 700;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 4px;
             color: #fff !important;
             flex: 1;
             transition: 0.3s;
@@ -293,15 +293,41 @@
             text-align: center; 
             border-radius: 20px;
             z-index: 1;
-            background-color: rgba(15, 18, 25, 0.3);
+            background: rgba(15, 18, 25, 0.95);
             backdrop-filter: blur(6px);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            border: 1px solid var(--card-border);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            overflow: hidden; 
+            overflow: visible;
+        }
+
+        /* ===== SIRF BORDER GLOW - BACKGROUND SAFE ===== */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 300% 100%;
+            z-index: -2;
+            border-radius: 22px;
+            animation: rgbBorderGlow 4s linear infinite;
+        }
+
+        /* Inner dark overlay - taaki sirf border dikhe */
+        .auth-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 18, 25, 0.98);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        @keyframes rgbBorderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
         }
 
         .auth-card-overlay {
@@ -348,7 +374,7 @@
         #main-app { display: none; width: 100%; position: relative; z-index: 2; }
         
         .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 75px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 55px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 25px; z-index: 1000;
             background: rgba(10,12,18,0.25);
@@ -356,19 +382,19 @@
             -webkit-backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .nav-left { display: flex; align-items: center; gap: 15px; }
-        .menu-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; width: 45px; height: 45px; border-radius: 12px; }
+        .nav-left { display: flex; align-items: center; gap: 8px; }
+        .menu-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; width: 36px; height: 36px; border-radius: 10px; }
         .menu-btn:hover { background: rgba(0,240,255,0.1); color: var(--neon-cyan); }
-        .logo { font-weight: 800; font-size: 24px; }
+        .logo { font-weight: 800; font-size: 16px; white-space: nowrap; }
         .logo span { color: var(--neon-cyan); }
         .balance-badge {
             background: rgba(0,240,255,0.1); border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan); padding: 8px 18px; border-radius: 30px;
-            font-size: 14px; display: flex; align-items: center; gap: 8px;
+            color: var(--neon-cyan); padding: 5px 10px; border-radius: 20px;
+            font-size: 11px; display: flex; align-items: center; gap: 5px;
         }
 
         .dropdown {
-            position: absolute; top: 85px; left: 25px; width: 240px;
+            position: absolute; top: 65px; left: 25px; width: 240px;
             background: rgba(18,22,32,0.4);
             backdrop-filter: blur(10px);
             border-radius: 16px; 
@@ -409,12 +435,12 @@
 
         .dropdown-item:hover { background: rgba(0,240,255,0.1); color: var(--neon-cyan); padding-left: 28px; }
 
-        .page-content { padding: 85px 20px 80px; max-width: 1200px; margin: 0 auto; min-height: 100vh; animation: fadeIn 0.4s ease; transition: padding-top 0.3s; }
+        .page-content { padding: 65px 15px 80px; max-width: 1200px; margin: 0 auto; min-height: 100vh; animation: fadeIn 0.4s ease; transition: padding-top 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .page-header { 
             display: flex; flex-direction: column; align-items: stretch;
-            margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px;
+            margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;
         }
         
         .header-top-row {
@@ -422,12 +448,12 @@
             width: 100%;
         }
 
-        .page-title { font-size: 22px; font-weight: 800; text-transform: uppercase; margin: 0; white-space: nowrap; }
+        .page-title { font-size: 18px; font-weight: 800; text-transform: uppercase; margin: 0; white-space: nowrap; }
         .page-title span { color: var(--neon-purple); }
 
         .search-container { position: relative; flex: 1; max-width: 100%; margin-top: 15px; }
         .search-container input { 
-            width: 100%; height: 42px; padding-left: 45px; border-radius: 30px; 
+            width: 100%; height: 38px; padding-left: 40px; border-radius: 30px; 
             background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 240, 255, 0.3); 
             color: #ffffff !important; font-size: 13px; font-weight: 500; outline: none; transition: 0.3s;
         }
@@ -486,15 +512,15 @@
         .text-5 { transform: rotate(270deg); padding-top: 15px; } 
         .text-6 { transform: rotate(330deg); padding-top: 15px; } 
 
-        .promo-slider { display: flex; overflow-x: auto; gap: 15px; margin-bottom: 30px; scroll-snap-type: x mandatory; }
+        .promo-slider { display: flex; overflow-x: auto; gap: 10px; margin-bottom: 15px; scroll-snap-type: x mandatory; }
         .promo-slider::-webkit-scrollbar { display: none; }
-        .promo-card { flex: 0 0 85%; max-width: 500px; height: 180px; position: relative; border-radius: 16px; overflow: hidden; scroll-snap-align: center; cursor: pointer; }
+        .promo-card { flex: 0 0 85%; max-width: 500px; height: 150px; position: relative; border-radius: 16px; overflow: hidden; scroll-snap-align: center; cursor: pointer; }
         @media (min-width: 768px) { .promo-card { flex: 0 0 45%; } }
         .promo-card img { width: 100%; height: 100%; object-fit: cover; }
         .promo-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 15px 15px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); display: flex; justify-content: space-between; align-items: flex-end; }
         .promo-title { color: white; font-weight: 700; font-size: 16px; }
 
-        .panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
         
         @keyframes rgbCardBorderSoft {
             0% { border-color: #ff2a5f; box-shadow: 0 0 6px rgba(255,42,95,0.25); }
@@ -511,7 +537,7 @@
             backdrop-filter: none !important; 
             -webkit-backdrop-filter: none !important; 
             border: 2px solid transparent; 
-            border-radius: 20px;
+            border-radius: 14px;
             overflow: hidden;
             transition: transform 0.4s;
             position: relative; z-index: 1;
@@ -519,17 +545,17 @@
         }
         .panel-card:hover { transform: translateY(-8px); }
 
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: transparent !important; overflow: hidden; border-radius: 20px 20px 0 0;} 
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: transparent !important; overflow: hidden; border-radius: 14px 14px 0 0;} 
         .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-fallback { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(20,24,34,0.5); color: var(--text-muted); }
         .video-fallback i { font-size: 48px; margin-bottom: 10px; color: var(--error); }
 
-        .panel-info { padding: 25px; background: transparent !important; } 
+        .panel-info { padding: 10px 12px 12px 12px; background: transparent !important; } 
         
         .panel-title { 
-            font-size: 18px; 
+            font-size: 14px; 
             font-weight: 800; 
-            margin-bottom: 15px; 
+            margin-bottom: 6px; 
             text-transform: uppercase; 
             white-space: nowrap; 
             overflow: hidden; 
@@ -560,17 +586,17 @@
             100% { border-left-color: #ff2a5f; }
         }
 
-        .features-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; align-items: center; width: 100%; }
+        .features-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 6px; align-items: center; width: 100%; }
         
         .feature-item {
             background: rgba(15, 20, 30, 0.8);
             border-left: 3px solid var(--neon-cyan);
-            border-radius: 8px;
-            padding: 10px 15px; 
+            border-radius: 5px;
+            padding: 5px 8px; 
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 13px;
+            gap: 6px;
+            font-size: 10px;
             font-weight: 600;
             color: #ffffff;
             width: 100%;
@@ -578,7 +604,7 @@
             animation: rgbBorderOnly 6s linear infinite; 
         }
         .feature-item i { 
-            font-size: 16px; 
+            font-size: 11px; 
             animation: rgbGlowText 6s linear infinite; 
         }
         
@@ -591,7 +617,7 @@
         .expand-arrow-btn {
             background: transparent;
             border: none;
-            font-size: 26px;
+            font-size: 18px;
             cursor: pointer;
             width: 100%;
             text-align: center;
@@ -610,15 +636,15 @@
             border: none;
             color: white;
             width: 100%;
-            height: 48px;
+            height: 36px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: 700;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
-            margin-bottom: 10px;
+            padding: 0 8px;
+            margin-bottom: 4px;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 42, 95, 0.4);
@@ -634,9 +660,9 @@
             color: white;
             font-weight: 800;
             width: 100%;
-            height: 48px;
+            height: 36px;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 12px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
             transition: 0.3s;
@@ -648,11 +674,11 @@
         .plan-list-container {
             display: none; 
             flex-direction: column;
-            gap: 8px; 
-            margin-bottom: 15px;
+            gap: 4px; 
+            margin-bottom: 6px;
             background: transparent; 
             width: 100%;
-            max-height: 260px;
+            max-height: 160px;
             overflow-y: auto;
             padding-right: 5px;
         }
@@ -665,8 +691,8 @@
             justify-content: space-between;
             align-items: center;
             background: rgba(20, 24, 34, 0.7); 
-            padding: 10px 15px; 
-            border-radius: 12px;
+            padding: 5px 8px; 
+            border-radius: 6px;
             border: 2px solid transparent; 
             cursor: pointer;
             transition: all 0.3s ease;
@@ -690,14 +716,14 @@
 
         /* BOTH PRICE AND DURATION NOW HAVE RGB ANIMATION */
         .plan-info-text .price { 
-            font-size: 16px; 
+            font-size: 12px; 
             font-weight: 900; 
             white-space: nowrap; 
             animation: rgbGlowText 6s linear infinite; 
         }
 
         .plan-info-text .duration { 
-            font-size: 13px; 
+            font-size: 9px; 
             font-weight: 700; 
             text-transform: uppercase; 
             margin-bottom: 0px; 
@@ -706,8 +732,8 @@
         }
         
         .radio-indicator {
-            width: 22px; 
-            height: 22px; 
+            width: 14px; 
+            height: 14px; 
             border-radius: 50%;
             border: 2px solid rgba(255,255,255,0.4);
             position: relative;
@@ -724,8 +750,8 @@
             position: absolute;
             top: 50%; left: 50%; 
             transform: translate(-50%, -50%);
-            width: 12px; 
-            height: 12px; 
+            width: 7px; 
+            height: 7px; 
             border-radius: 50%;
             background: var(--neon-cyan);
             box-shadow: 0 0 10px var(--neon-cyan);
@@ -887,7 +913,7 @@
         }
 
         #app-ticker {
-            position: fixed; top: 75px; left: 0; width: 100%; height: 30px; 
+            position: fixed; top: 55px; left: 0; width: 100%; height: 28px; 
             background: var(--neon-cyan); color: #000; font-weight: 700; font-size: 13px; 
             display: flex; align-items: center; overflow: hidden; z-index: 999;
             box-shadow: 0 2px 10px rgba(0,240,255,0.3);
@@ -1015,11 +1041,11 @@
         }
 
         @media (max-width: 480px) {
-            .navbar { padding: 0 15px; height: 70px; }
-            #app-ticker { top: 70px; }
-            .logo { font-size: 16px; }
+            .navbar { padding: 0 15px; height: 50px; }
+            #app-ticker { top: 50px; }
+            .logo { font-size: 14px; }
             .page-title { font-size: 18px; }
-            .page-content { padding-top: 80px; } 
+            .page-content { padding-top: 60px; } 
             .search-container { max-width: 100%; }
             .promo-card { flex: 0 0 90%; height: 150px; }
             .coupon-box { flex-direction: column; }
@@ -1124,6 +1150,7 @@
         <div class="input-group"><input id="login-pass" placeholder="Password" type="password"></div>
         <button class="btn btn-primary" id="btn-login"><i class="fas fa-sign-in-alt"></i> Secure Login</button>
         <p class="auth-toggle" style="margin-top: 15px;">New user? <span id="go-to-signup" style="color:var(--neon-cyan); cursor:pointer;">Create Account</span></p>
+        <p class="auth-toggle" style="margin-top: 8px; font-size: 12px;"><span id="forgot-password-link" style="color:var(--neon-purple); cursor:pointer; text-decoration: underline;">Forgot Password?</span></p>
         <div class="contact-buttons" style="display:flex; gap:10px; margin-top:20px;">
             <a class="btn btn-outline btn-wa" href="#" id="auth-wa-link" target="_blank" style="border-color:#25D366; color:#25D366; width:100%; height:48px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <a class="btn btn-outline btn-tg" href="#" id="auth-tg-link" target="_blank" style="border-color:#0088cc; color:#0088cc; width:100%; height:48px;"><i class="fab fa-telegram-plane"></i> Telegram</a>
@@ -1158,11 +1185,11 @@
     <div class="page-content" id="page-home">
         
         <div class="page-header">
-            <div class="header-top-row" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+            <div class="header-top-row" style="display:flex; justify-content:space-between; align-items:center; width: 100%; margin-bottom: 5px;">
                 <h2 class="page-title" style="margin-bottom:0; font-size: 18px;">Premium <span>Store</span></h2>
                 
                 <div class="category-dropdown-container" style="position: relative;">
-                    <button id="category-dropdown-btn" class="btn btn-primary" style="height: 36px; padding: 0 15px; border-radius: 20px; font-size: 12px; font-weight: bold; width: auto; box-shadow: 0 0 10px var(--neon-cyan-dim);">
+                    <button id="category-dropdown-btn" class="btn btn-primary" style="height: 32px; padding: 0 12px; border-radius: 20px; font-size: 11px; font-weight: bold; width: auto; box-shadow: 0 0 10px var(--neon-cyan-dim);">
                         <i class="fas fa-filter"></i> Category
                     </button>
                     
@@ -1179,7 +1206,7 @@
                 </div>
             </div>
             
-            <div class="search-container" style="max-width: 100%; margin-top: 15px;">
+            <div class="search-container" style="max-width: 100%; margin-top: 8px;">
                 <i class="fas fa-search"></i>
                 <input id="search-input" placeholder="Search panels...">
             </div>
@@ -1400,6 +1427,31 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="modal-forgot-password">
+    <div class="modal" style="text-align:center;">
+        <i class="fas fa-key" style="font-size: 50px; color: var(--neon-cyan); margin-bottom: 15px; animation: pulse 2s infinite;"></i>
+        <h2 style="color: white; margin-bottom: 10px;">Reset Password</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Apna registered email enter karein. Password reset link bhej diya jayega.</p>
+        <div class="input-group" style="margin-bottom: 20px;">
+            <input id="forgot-email" placeholder="Enter your email" type="email" style="width: 100%; padding: 0 18px; height: 50px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; color: white; outline: none;">
+        </div>
+        <button class="btn btn-primary" id="btn-send-reset" style="width: 100%; height: 48px; margin-bottom: 10px;"><i class="fas fa-paper-plane"></i> SEND RESET LINK</button>
+        <button class="btn" onclick="closeModal('modal-forgot-password')" style="background: transparent; border: 1px solid var(--error); color: var(--error); width: 100%; height: 48px;">CANCEL</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-forgot-success">
+    <div class="modal" style="text-align:center;">
+        <div class="success-icon-container">
+            <div class="success-icon-circle"></div>
+            <i class="fas fa-check-circle success-icon"></i>
+        </div>
+        <h2 style="color:var(--success); margin-bottom:10px;">EMAIL SENT!</h2>
+        <p style="font-size: 14px; color: var(--text-main); margin-bottom: 25px;">Password reset link aapke email par bhej diya gaya hai.<br>Kripya apna inbox check karein.</p>
+        <button class="btn btn-primary" onclick="closeModal('modal-forgot-success')" style="width: auto; padding: 0 30px;">OKAY</button>
+    </div>
+</div>
+
 <div class="modal-overlay" id="modal-welcome">
     <div class="rgb-modal-box">
         <button class="rgb-close-btn" onclick="closeModal('modal-welcome')"><i class="fas fa-times"></i></button>
@@ -1447,7 +1499,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getDatabase, ref, set, get, onValue, push, runTransaction, serverTimestamp, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -1751,7 +1803,7 @@
             if (data.ticker === 'true' && data.ticker_msg) {
                 ticker.classList.remove('hidden');
                 document.getElementById('ticker-text').innerHTML = `    🚀 ${data.ticker_msg} 🚀    `;
-                pageContents.forEach(el => el.style.paddingTop = '130px'); 
+                pageContents.forEach(el => el.style.paddingTop = '95px'); 
             } else {
                 ticker.classList.add('hidden');
                 pageContents.forEach(el => el.style.paddingTop = '85px'); 
@@ -2168,6 +2220,28 @@
             localStorage.setItem('hasLoggedInBefore', 'true');
             showToast("Welcome back!");
         } catch(e) { showToast("Invalid credentials", "error"); }
+    };
+
+    // ===== FORGOT PASSWORD =====
+    document.getElementById('forgot-password-link')?.addEventListener('click', () => {
+        document.getElementById('modal-forgot-password').classList.add('active');
+    });
+
+    document.getElementById('btn-send-reset').onclick = async () => {
+        const email = document.getElementById('forgot-email').value.trim();
+        if(!email) return showToast("Please enter your email", "error");
+        const btn = document.getElementById('btn-send-reset');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SENDING...';
+        btn.disabled = true;
+        try {
+            await sendPasswordResetEmail(auth, email);
+            document.getElementById('modal-forgot-password').classList.remove('active');
+            document.getElementById('modal-forgot-success').classList.add('active');
+            document.getElementById('forgot-email').value = '';
+            showToast("Reset link sent!", "success");
+        } catch(e) { showToast(e.message, "error"); }
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> SEND RESET LINK';
+        btn.disabled = false;
     };
 
     document.getElementById('btn-logout').onclick = async () => { 
